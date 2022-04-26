@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import CommonCard from "../component/CommonCard";
 
-function Home() {
+function Home(props) {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [data, setData] = useState([]);
@@ -15,6 +15,14 @@ function Home() {
       setTitle("");
     }
   };
+
+  const deleteHandler = (id)=>{
+    console.log("delete index",id)
+    const newdata = data.filter((d,i)=>{
+      return id != i;
+    })
+    setData(newdata);
+  }
   return (
     <div>
       <Box
@@ -27,7 +35,7 @@ function Home() {
           boxShadow: "1px 2px 10px 1px",
         }}
       >
-        <h1>To do App</h1>
+        <h1>{props.appTitle}</h1>
         <Grid container justifyContent="center" alignItems="center" spacing={2}>
           <Grid item xs={3}>
             <TextField
@@ -90,10 +98,12 @@ function Home() {
                   {d.text}
                 </Grid>
                 <Grid item xs={2}>
-                  <Button variant="text">edit</Button>
+                  <Button variant="text ">edit</Button>
                 </Grid>
                 <Grid item xs={2}>
-                  <Button variant="text">delete</Button>
+                  
+                  {data.length != 1?(<Button variant="text" onClick={()=>{deleteHandler(i)}} >delete</Button>):null}
+                  
                 </Grid>
               </Grid>
             </Box>
