@@ -16,13 +16,24 @@ function Home(props) {
     }
   };
 
-  const deleteHandler = (id)=>{
-    console.log("delete index",id)
-    const newdata = data.filter((d,i)=>{
+  const deleteHandler = (id) => {
+    const newdata = data.filter((d, i) => {
       return id != i;
-    })
+    });
     setData(newdata);
-  }
+  };
+
+  const editHandler = (d,id) => {
+    console.log(d,id);
+    const newdata = data.filter((d, i) => {
+      return id != i;
+    });
+
+    setData(newdata);
+    setTitle(d.title);
+    setText(d.text);
+  };
+
   return (
     <div>
       <Box
@@ -91,19 +102,36 @@ function Home(props) {
               key={i}
             >
               <Grid container justifyContent="center" alignItems="center">
+                <Grid item xs={1}>
+                  {i + 1}
+                </Grid>
                 <Grid item xs={2}>
                   {d.title}
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={5}>
                   {d.text}
                 </Grid>
                 <Grid item xs={2}>
-                  <Button variant="text ">edit</Button>
+                  <Button
+                    variant="text"
+                    onClick={() => {
+                      editHandler(d,i);
+                    }}
+                  >
+                    edit
+                  </Button>
                 </Grid>
                 <Grid item xs={2}>
-                  
-                  {data.length != 1?(<Button variant="text" onClick={()=>{deleteHandler(i)}} >delete</Button>):null}
-                  
+                  {data.length != 1 ? (
+                    <Button
+                      variant="text"
+                      onClick={() => {
+                        deleteHandler(i);
+                      }}
+                    >
+                      delete
+                    </Button>
+                  ) : null}
                 </Grid>
               </Grid>
             </Box>
